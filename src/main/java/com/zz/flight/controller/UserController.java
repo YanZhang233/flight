@@ -83,7 +83,7 @@ public class UserController {
     //用户修改
     @PatchMapping
     @ResponseBody
-    public ServerResponse updateUser(User user,HttpSession session){
+    public ServerResponse<User> updateUser(User user,HttpSession session){
         //check if log in
         User currentUser =(User) session.getAttribute(Const.CURRENT_USER);
         if(currentUser == null)return ServerResponse.creatByErrorMessage("User doesn't login");

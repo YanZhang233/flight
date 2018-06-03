@@ -148,7 +148,7 @@ public class UserServiceImpl implements UserService {
 
 
     //用户修改
-    public ServerResponse updateUser(User user){
+    public ServerResponse<User> updateUser(User user){
         if(user==null) return ServerResponse.creatByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         if(userRepository.findByEmail(user.getEmail())!= null) return ServerResponse.creatByErrorMessage("Email has been used");
         User pre = userRepository.findById(user.getId()).orElse(null);
@@ -157,7 +157,8 @@ public class UserServiceImpl implements UserService {
         //更新工具 不更新为null的
         UpdateUtil.copyNullProperties(pre,user);
         User savedUser = userRepository.save(user);
-        return ServerResponse.creatBySuccess("Update success",savedUser);
+        savedUser.setPassword(StringUtils.EMPTY);
+        return ServerResponse.creatBySuccess(savedUser);
     }
 
     //查询用户信息

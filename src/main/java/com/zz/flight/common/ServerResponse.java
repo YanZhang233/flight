@@ -33,7 +33,7 @@ public class ServerResponse<T> implements Serializable {
     //序列化时忽略这个public方法
     @JsonIgnore
     public boolean isSuccess() {
-        return this.status == ResponseCode.SUCCESS.getCode();
+        return (this.status == ResponseCode.SUCCESS.getCode());
     }
 
     public int getStatus() {
