@@ -33,7 +33,7 @@ public class AdminController {
                                        @RequestParam(value = "pageSize",defaultValue = "10") int pageSize){
         User user =(User) session.getAttribute(Const.CURRENT_USER);
         if(user == null) return ServerResponse.creatByErrorCodeMessage(ResponseCode.NEEDLOG_IN.getCode(),ResponseCode.NEEDLOG_IN.getDesc());
-        if(user.getRole()!=Const.Role.ROLE_ADMIN) return ServerResponse.creatByErrorMessage("You are not an admin");
+        if(user.getRole()!=Const.Role.ROLE_ADMIN) return ServerResponse.creatByErrorCodeMessage(ResponseCode.NEEDLOG_IN.getCode(),ResponseCode.NEEDLOG_IN.getDesc());
         return volunteerService.listALL(pageIndex,pageSize);
     }
 
