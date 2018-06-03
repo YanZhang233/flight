@@ -24,6 +24,10 @@ public class Request {
 
     private String airport;
 
+    private Integer baggage;
+
+    private Integer numOfPeople;
+
     private String destination;
 
     private String time;
@@ -41,8 +45,10 @@ public class Request {
     public Request(){}
 
 
-    public Request(Long id, String requestUserName, String airport, String takenUserName, Long requestUserId, Long takenUserId, String destination, String description, String flightInfo, Integer status, String time, Date updateTime, Date createTime){
+    public Request(Long id,Integer baggage,Integer numOfPeople ,String requestUserName, String airport, String takenUserName, Long requestUserId, Long takenUserId, String destination, String description, String flightInfo, Integer status, String time, Date updateTime, Date createTime){
         this.id = id;
+        this.baggage = baggage;
+        this.numOfPeople = numOfPeople;
         this.requestUserId = requestUserId;
         this.description = description;
         this.takenUserName = takenUserName;
@@ -159,5 +165,21 @@ public class Request {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Integer getBaggage() {
+        return baggage;
+    }
+
+    public void setBaggage(Integer baggage) {
+        this.baggage = baggage;
+    }
+
+    public Integer getNumOfPeople() {
+        return numOfPeople;
+    }
+
+    public void setNumOfPeople(Integer numOfPeople) {
+        this.numOfPeople = numOfPeople;
     }
 }
