@@ -16,6 +16,14 @@ public class User {
 
     private String gender;
 
+    private String graduatedFrom;
+
+    private String major;
+
+    private String homeTown;
+
+    private String actualName;
+
     private String password;
 
     private String email;
@@ -33,8 +41,12 @@ public class User {
     public User(){}
 
 
-    public User(Long id, String userName,String gender ,String email,Integer emailChecked ,String password,Integer role, String phone, Date createTime, Date updateTime){
+    public User(String major,String actualName,String homeTown,String graduatedFrom,Long id, String userName,String gender ,String email,Integer emailChecked ,String password,Integer role, String phone, Date createTime, Date updateTime){
         this.id = id;
+        this.actualName = actualName;
+        this.homeTown = homeTown;
+        this.graduatedFrom = graduatedFrom;
+        this.major = major;
         this.email = email;
         this.userName = userName;
         this.gender = gender;
@@ -76,6 +88,38 @@ public class User {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getGraduatedFrom() {
+        return graduatedFrom;
+    }
+
+    public void setGraduatedFrom(String graduatedFrom) {
+        this.graduatedFrom = graduatedFrom;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    public String getHomeTown() {
+        return homeTown;
+    }
+
+    public void setHomeTown(String homeTown) {
+        this.homeTown = homeTown;
+    }
+
+    public String getActualName() {
+        return actualName;
+    }
+
+    public void setActualName(String actualName) {
+        this.actualName = actualName;
     }
 
     public String getPassword() {

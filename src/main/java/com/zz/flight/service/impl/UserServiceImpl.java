@@ -195,7 +195,7 @@ public class UserServiceImpl implements UserService {
         //发邮件
         String to = user.getEmail();
         String from = "m18667015308@163.com";
-        String content = "http://localhost:8088//dist/view/validateEmail.html?username="+user.getUserName()+"&token="+token;
+        String content = "http://flight.zhuo9529.com/validateEmail.html?username="+user.getUserName()+"&token="+token;
         String title = "Validate your email";
         if(!EmailUtil.sendEmail(from,to,content,title)){
             return ServerResponse.creatByErrorMessage("send email error");
@@ -225,7 +225,7 @@ public class UserServiceImpl implements UserService {
         String title = "Reset your password";
         String token = UUID.randomUUID().toString();
         TokenCache.setKey(TokenCache.TOKEN_PREFIX+username,token);
-        String content = "http://localhost:8088/dist/view/changePwd.html?"+"token="+token+"&"+"username="+username;
+        String content = "http://flight.zhuo9529.com/changePwd.html?"+"token="+token+"&"+"username="+username;
         if(!EmailUtil.sendEmail(from,to,content,title)){
             return ServerResponse.creatByErrorMessage("send email error");
         }
