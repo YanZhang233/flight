@@ -22,6 +22,8 @@ public class User {
 
     private String homeTown;
 
+    private String wechat;
+
     private String actualName;
 
     private String password;
@@ -41,13 +43,14 @@ public class User {
     public User(){}
 
 
-    public User(String major,String actualName,String homeTown,String graduatedFrom,Long id, String userName,String gender ,String email,Integer emailChecked ,String password,Integer role, String phone, Date createTime, Date updateTime){
+    public User(String major,String wechat,String actualName,String homeTown,String graduatedFrom,Long id, String userName,String gender ,String email,Integer emailChecked ,String password,Integer role, String phone, Date createTime, Date updateTime){
         this.id = id;
         this.actualName = actualName;
         this.homeTown = homeTown;
         this.graduatedFrom = graduatedFrom;
         this.major = major;
         this.email = email;
+        this.wechat = wechat;
         this.userName = userName;
         this.gender = gender;
         this.password = password;
@@ -168,5 +171,13 @@ public class User {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getWechat() {
+        return wechat;
+    }
+
+    public void setWechat(String wechat) {
+        this.wechat = wechat;
     }
 }
