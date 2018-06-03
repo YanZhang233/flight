@@ -74,6 +74,7 @@ public class UserServiceImpl implements UserService {
         }
         User user = new User();
         user.setUserName(username);
+        user.setEmailChecked(Const.EmailChecked.EMAIL_VALID);
         user.setEmail(email);
         user.setPassword(MD5Util.MD5EncodeUtf8(password));
         user.setRole(Const.Role.ROLE_ADMIN);
