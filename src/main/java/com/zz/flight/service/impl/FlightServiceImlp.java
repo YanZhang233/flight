@@ -58,8 +58,10 @@ public class FlightServiceImlp implements FlightService {
     public ServerResponse<Request> addRequest(Request request,Long id,String username){
         if(request==null) return ServerResponse.creatByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         //检查id是否已经有request
-        Request alreadyRequest = requestRepository.findByRequestUserId(id);
-        if(alreadyRequest!=null && alreadyRequest.getStatus()!=Const.RequestStatus.REQUEST_CANCELED) return ServerResponse.creatByErrorMessage("你已经提出了接机需求");
+        Request alreadyRequest = requestRepository.findByRequestUserIdAndStatus(id,Const.RequestStatus.REQUEST_NOT_TAKEN);
+        if(alreadyRequest!=null) return ServerResponse.creatByErrorMessage("你已经提出了接机需求");
+        alreadyRequest = requestRepository.findByRequestUserIdAndStatus(id,Const.RequestStatus.REQUEST_TAKEN);
+        if(alreadyRequest!=null) return ServerResponse.creatByErrorMessage("你已经提出了接机需求");
         //设置 提出请求的人的name和id
         request.setRequestUserId(id);
         request.setRequestUserName(username);
@@ -103,7 +105,7 @@ public class FlightServiceImlp implements FlightService {
         return ServerResponse.creatBySuccess("success");
     }
 
-    //查找request
+    //查找request 当前用户的
     public ServerResponse<Page> getRequestByUserId(Long userId,int pageIndex,int pageSize,Long curUserId){
         Sort sort =  new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = PageRequest.of(pageIndex,pageSize,sort);

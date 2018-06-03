@@ -12,7 +12,7 @@ public interface RequestRepository extends JpaRepository<Request,Long> {
 
     Page<Request> findAllByStatus(int status,Pageable pageable);
 
-    Request findByRequestUserId(Long id);
+    Request findByRequestUserIdAndStatus(Long id,int status);
 
     Page<Request> findAllByRequestUserIdOrTakenUserId(Long requestUserId,Long takenUserId,Pageable pageable);
 

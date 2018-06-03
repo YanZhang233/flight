@@ -165,7 +165,7 @@ public class UserServiceImpl implements UserService {
         User find = userRepository.findById(id).orElse(null);
         if(find==null) return ServerResponse.creatByErrorMessage("Cant find user");
        //检查这个人是不是自己的接机人
-        Request request = requestRepository.findByRequestUserId(curUser.getId());
+        Request request = requestRepository.findByRequestUserIdAndStatus(curUser.getId(),Const.RequestStatus.REQUEST_TAKEN);
         boolean isTakenUser;
         if(request == null) isTakenUser = false;
         else {
