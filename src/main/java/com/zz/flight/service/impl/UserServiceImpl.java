@@ -97,6 +97,7 @@ public class UserServiceImpl implements UserService {
         volunteer.setApplyUserId(savedUser.getId());
         volunteer.setApplyUserName(user.getUserName());
         volunteer.setStatus(Const.VolunteerStatus.VOLUNTEER_UNCHECKED);
+        volunteer.setEmailValidate(savedUser.getEmailChecked());
         Date now = new Date();
         volunteer.setCreateTime(now);
         volunteer.setUpdateTime(now);

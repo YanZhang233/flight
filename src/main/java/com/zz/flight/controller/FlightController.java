@@ -63,6 +63,7 @@ public class FlightController {
         if(user == null){
             return ServerResponse.creatByErrorCodeMessage(ResponseCode.NEEDLOG_IN.getCode(),ResponseCode.NEEDLOG_IN.getDesc());
         }
+        if(user.getRole()==Const.Role.ROLE_ADMIN) return ServerResponse.creatByErrorMessage("管理员不能接受接机请求");
         if(user.getEmailChecked()==Const.EmailChecked.EMAIL_INVALID) return ServerResponse.creatByErrorMessage("请先验证邮箱");
         if(user.getRole()==Const.Role.ROLE_CUSTOMER){
             return ServerResponse.creatByErrorMessage("不能接受此请求，您不是接机志愿者");

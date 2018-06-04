@@ -37,6 +37,7 @@ public class AdminController {
         return volunteerService.listALL(pageIndex,pageSize);
     }
 
+    //通过请求
     @PatchMapping("/{id}")
     @ResponseBody
     public ServerResponse permit(HttpSession session,@PathVariable("id") Long id){

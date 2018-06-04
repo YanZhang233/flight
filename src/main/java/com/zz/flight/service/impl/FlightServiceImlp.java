@@ -93,15 +93,6 @@ public class FlightServiceImlp implements FlightService {
         //找到请求人邮件
         User requestUser = userRepository.findById(request.getRequestUserId()).orElse(null);
         if(requestUser==null) return ServerResponse.creatByErrorMessage("cant find the user");
-        StringBuilder content = new StringBuilder();
-        content.append("<h3>成功配对</h3>");
-        content.append("<p>接机志愿者邮箱： "+email+"</p>");
-        //TODO 连接地址
-        content.append("点击链接获取详细信息："+"URL_TEMP");
-        String from = "zhuo9529@gmail.com";
-        String to = requestUser.getEmail();
-        String title = "成功配对接机人员";
-        EmailUtil.sendEmail(from,to,content.toString(),title);
         return ServerResponse.creatBySuccess("success");
     }
 

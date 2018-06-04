@@ -17,6 +17,8 @@ public class Volunteer{
 
     private Long applyUserId;
 
+    private Integer emailValidate;
+
     private Integer status;
 
     private Date createTime;
@@ -25,8 +27,9 @@ public class Volunteer{
 
     public Volunteer(){}
 
-    public Volunteer(Long id,String applyUserName,Long applyUserId,Integer status,Date createTime,Date updateTime){
+    public Volunteer(Long id,Integer emailValidate,String applyUserName,Long applyUserId,Integer status,Date createTime,Date updateTime){
         this.id = id;
+        this.emailValidate = emailValidate;
         this.applyUserId = applyUserId;
         this.applyUserName = applyUserName;
         this.status = status;
@@ -82,4 +85,11 @@ public class Volunteer{
         this.updateTime = updateTime;
     }
 
+    public Integer getEmailValidate() {
+        return emailValidate;
+    }
+
+    public void setEmailValidate(Integer emailValidate) {
+        this.emailValidate = emailValidate;
+    }
 }
