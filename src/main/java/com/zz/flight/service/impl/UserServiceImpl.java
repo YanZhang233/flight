@@ -16,6 +16,10 @@ import com.zz.flight.util.MD5Util;
 import com.zz.flight.util.UpdateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
@@ -261,5 +265,11 @@ public class UserServiceImpl implements UserService {
         return ServerResponse.creatBySuccessMessage("Reset success");
     }
 
-
+    //列出所有用户
+    public ServerResponse<Page> listAllUsers(int pageIndex,int pageSize) {
+        Sort sort = new Sort(Sort.Direction.DESC, "id");
+        Pageable pageable = PageRequest.of(pageIndex, pageSize, sort);
+        Page<User> page = userRepository.findAll(pageable);
+        return ServerResponse.creatBySuccess(page);
+    }
 }

@@ -2,6 +2,7 @@ package com.zz.flight.service;
 
 import com.zz.flight.common.ServerResponse;
 import com.zz.flight.entity.User;
+import org.springframework.data.domain.Page;
 
 import javax.servlet.http.HttpSession;
 
@@ -29,4 +30,6 @@ public interface UserService {
     ServerResponse changePass(String username,String token,String newPass);
 
     ServerResponse resetPass(Long id,String newPass);
+
+    ServerResponse<Page> listAllUsers(int pageIndex, int pageSize);
 }

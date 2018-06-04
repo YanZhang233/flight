@@ -34,7 +34,7 @@ public class VolunteerServiceImpl implements VolunteerService {
 
     public ServerResponse<Page> listALL(int pageIndex,int pageSize){
         Sort sort = new Sort(Sort.Direction.DESC, "id");
-        Pageable pageable = PageRequest.of(pageIndex,pageSize);
+        Pageable pageable = PageRequest.of(pageIndex,pageSize,sort);
         Page<Volunteer> page = volunteerRepository.findAll(pageable);
         if(page.getTotalElements()==0) return ServerResponse.creatByErrorMessage("None");
         return ServerResponse.creatBySuccess(page);
@@ -57,7 +57,7 @@ public class VolunteerServiceImpl implements VolunteerService {
         String to = user.getEmail();
         String from = "zhuo9529@gmail.com";
         String title = "验证通过";
-        String content = "<p>通过验证</p>";
+        String content = "<p>申请接机志愿者通过验证</p>";
         EmailUtil.sendEmail(from,to,content,title);
         return ServerResponse.creatBySuccessMessage("success");
     }

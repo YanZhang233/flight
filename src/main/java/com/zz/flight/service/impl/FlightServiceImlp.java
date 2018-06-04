@@ -47,10 +47,7 @@ public class FlightServiceImlp implements FlightService {
     public ServerResponse<Page> listAll(int pageIndex, int pageSize){
         Sort sort =  new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = PageRequest.of(pageIndex,pageSize,sort);
-        Page<Request> page  = requestRepository.findAll(pageable);
-
-        if(page.getTotalElements()==0) return ServerResponse.creatByErrorMessage("cant find");
-
+        Page<Request> page  = requestRepository.findAllByStatusGreaterThanEqual(0,pageable);
         return ServerResponse.creatBySuccess(page);
     }
 
