@@ -193,6 +193,8 @@ public class UserServiceImpl implements UserService {
         if(!curUser.getId().equals(id) && !isTakenUser && curUser.getRole()!=Const.Role.ROLE_ADMIN){
             //Phone置空
             find.setPhone(StringUtils.EMPTY);
+            //真实姓名置空
+            //find.setActualName(StringUtils.EMPTY);
         }
         //密码置空
         find.setPassword(StringUtils.EMPTY);

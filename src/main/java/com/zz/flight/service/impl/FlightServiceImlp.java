@@ -93,7 +93,7 @@ public class FlightServiceImlp implements FlightService {
     public ServerResponse<Page> getRequestByUserId(Long userId,int pageIndex,int pageSize,Long curUserId){
         Sort sort =  new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = PageRequest.of(pageIndex,pageSize,sort);
-        Page<Request> page = requestRepository.findAllByRequestUserIdOrTakenUserId(userId,userId,pageable);
+        Page<Request> page = requestRepository.findAllByRequestUserIdOrTakenUserIdAndStatusGreaterThanEqual(userId,userId,0,pageable);
         if(page.getTotalElements()==0) return ServerResponse.creatByErrorMessage("cant find your request");
         //如果不是当前登录用户查看
 //        if(!userId.equals(curUserId)){
@@ -138,7 +138,7 @@ public class FlightServiceImlp implements FlightService {
         if(request==null) return ServerResponse.creatByErrorMessage("找不到该信息");
         if(role!=Const.Role.ROLE_ADMIN && !userId.equals(request.getRequestUserId()) && !userId.equals(request.getTakenUserId())) return ServerResponse.creatByErrorMessage("不能操作");
         //如果是admin
-        if(role==Const.Role.ROLE_ADMIN){
+        if(role==Const.Role.ROLE_ADMIN || role==Const.Role.ROLE_CUSTOMER){
             request.setStatus(Const.RequestStatus.REQUEST_CANCELED);
         }
         if(role==Const.Role.ROLE_V0LUNTEER){

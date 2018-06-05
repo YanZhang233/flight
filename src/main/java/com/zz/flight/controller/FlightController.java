@@ -50,7 +50,7 @@ public class FlightController {
         if(curUser==null) return ServerResponse.creatByErrorCodeMessage(ResponseCode.NEEDLOG_IN.getCode(),ResponseCode.NEEDLOG_IN.getDesc());
         //检查邮箱是否认证
         //if(curUser.getEmailChecked()==Const.EmailChecked.EMAIL_INVALID) return ServerResponse.creatByErrorMessage("请先验证邮箱");
-        if(curUser.getRole()!=Const.Role.ROLE_CUSTOMER && curUser.getStatus()!=Const.Status.USER_INVALID) return ServerResponse.creatByErrorMessage("您不能提出请求");
+        if(curUser.getRole()!=Const.Role.ROLE_CUSTOMER || curUser.getStatus()!=Const.Status.USER_VALID) return ServerResponse.creatByErrorMessage("您不能提出请求");
         return flightService.addRequest(request,curUser.getId(),curUser.getUserName());
     }
 
