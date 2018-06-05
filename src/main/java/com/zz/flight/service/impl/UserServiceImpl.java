@@ -55,6 +55,8 @@ public class UserServiceImpl implements UserService {
         user.setRole(Const.Role.ROLE_CUSTOMER);
         //MD5加密
         user.setPassword(MD5Util.MD5EncodeUtf8(user.getPassword()));
+        //status设置
+        user.setStatus(Const.Status.USER_VALID);
         //设置创建时间
         Date now = new Date();
         user.setCreateTime(now);
@@ -82,6 +84,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(email);
         user.setPassword(MD5Util.MD5EncodeUtf8(password));
         user.setRole(Const.Role.ROLE_ADMIN);
+        user.setStatus(Const.Status.USER_VALID);
         Date date = new Date();
         user.setCreateTime(date);
         user.setUpdateTime(date);
@@ -157,12 +160,20 @@ public class UserServiceImpl implements UserService {
         if(user==null) return ServerResponse.creatByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         if(userRepository.findByEmail(user.getEmail())!= null) return ServerResponse.creatByErrorMessage("Email has been used");
         User pre = userRepository.findById(user.getId()).orElse(null);
+        //新建一个User 只能更新规定的内容
+        User newUser = new User();
+        newUser.setActualName(user.getActualName());
+        newUser.setGender(user.getGender());
+        newUser.setGraduatedFrom(user.getGraduatedFrom());
+        newUser.setHomeTown(user.getHomeTown());
+        newUser.setMajor(user.getMajor());
         //获取当前时间
-        user.setUpdateTime(new Date());
+        newUser.setUpdateTime(new Date());
         //更新工具 不更新为null的
-        UpdateUtil.copyNullProperties(pre,user);
-        User savedUser = userRepository.save(user);
+        UpdateUtil.copyNullProperties(pre,newUser);
+        User savedUser = userRepository.save(newUser);
         savedUser.setPassword(StringUtils.EMPTY);
+        savedUser.setRole(null);
         return ServerResponse.creatBySuccess(savedUser);
     }
 
@@ -195,6 +206,7 @@ public class UserServiceImpl implements UserService {
     public ServerResponse<String> getValidateEmail(String username){
         User user = userRepository.findByUserName(username);
         if(user==null) return ServerResponse.creatByErrorMessage("没有该用户");
+        if(user.getEmailChecked()==Const.EmailChecked.EMAIL_VALID) return ServerResponse.creatByErrorMessage("已经激活");
         //随机产生string
         String token = UUID.randomUUID().toString();
         //token 放入cache
@@ -271,5 +283,25 @@ public class UserServiceImpl implements UserService {
         Pageable pageable = PageRequest.of(pageIndex, pageSize, sort);
         Page<User> page = userRepository.findAll(pageable);
         return ServerResponse.creatBySuccess(page);
+    }
+
+    //列入黑名单
+    public ServerResponse deleteUser(Long id){
+        User user = userRepository.findById(id).orElse(null);
+        if(user==null) return ServerResponse.creatByErrorMessage("找不到该用户");
+        if(user.getRole()==Const.Role.ROLE_ADMIN) return ServerResponse.creatByErrorMessage("没有权限");
+        user.setStatus(Const.Status.USER_INVALID);
+        user.setUpdateTime(new Date());
+        userRepository.save(user);
+        return ServerResponse.creatBySuccess("操作成功");
+    }
+
+    public ServerResponse validateUser(Long id){
+        User user = userRepository.findById(id).orElse(null);
+        if (user==null) return ServerResponse.creatByErrorMessage("找不到该用户");
+        user.setStatus(Const.Status.USER_VALID);
+        user.setUpdateTime(new Date());
+        userRepository.save(user);
+        return ServerResponse.creatBySuccess("操作成功");
     }
 }

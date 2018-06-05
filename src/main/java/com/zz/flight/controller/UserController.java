@@ -44,6 +44,24 @@ public class UserController {
         return userService.addVolunteer(user);
     }
 
+    //列入黑名单
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public ServerResponse deleteUser(@PathVariable("id") Long id,HttpSession session){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if(user==null||user.getRole()!=Const.Role.ROLE_ADMIN) return ServerResponse.creatByErrorMessage("没有权限");
+        return userService.deleteUser(id);
+    }
+
+    //移出黑名单
+    @PatchMapping("/{id}")
+    @ResponseBody
+    public ServerResponse validateUser(@PathVariable("id")Long id,HttpSession session){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if(user==null||user.getRole()!=Const.Role.ROLE_ADMIN) return ServerResponse.creatByErrorMessage("没有权限");
+        return userService.validateUser(id);
+    }
+
     //检查用户名邮箱是否注册
     @PostMapping("/check_valid")
     @ResponseBody

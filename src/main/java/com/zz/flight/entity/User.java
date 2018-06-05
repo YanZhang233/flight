@@ -32,6 +32,8 @@ public class User {
 
     private Integer emailChecked;
 
+    private Integer status;
+
     private String phone;
 
     private Integer role;
@@ -43,11 +45,12 @@ public class User {
     public User(){}
 
 
-    public User(String major,String wechat,String actualName,String homeTown,String graduatedFrom,Long id, String userName,String gender ,String email,Integer emailChecked ,String password,Integer role, String phone, Date createTime, Date updateTime){
+    public User(String major,String wechat,String actualName,Integer status,String homeTown,String graduatedFrom,Long id, String userName,String gender ,String email,Integer emailChecked ,String password,Integer role, String phone, Date createTime, Date updateTime){
         this.id = id;
         this.actualName = actualName;
         this.homeTown = homeTown;
         this.graduatedFrom = graduatedFrom;
+        this.status = status;
         this.major = major;
         this.email = email;
         this.wechat = wechat;
@@ -179,5 +182,13 @@ public class User {
 
     public void setWechat(String wechat) {
         this.wechat = wechat;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

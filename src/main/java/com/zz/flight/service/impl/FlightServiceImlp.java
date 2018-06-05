@@ -86,10 +86,6 @@ public class FlightServiceImlp implements FlightService {
         request.setUpdateTime(new Date());
         //save
         requestRepository.save(request);
-        //发邮件给提出请求的人 建立联系
-        //找到请求人邮件
-        User requestUser = userRepository.findById(request.getRequestUserId()).orElse(null);
-        if(requestUser==null) return ServerResponse.creatByErrorMessage("cant find the user");
         return ServerResponse.creatBySuccess("success");
     }
 

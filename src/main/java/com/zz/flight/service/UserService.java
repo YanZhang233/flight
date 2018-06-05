@@ -32,4 +32,8 @@ public interface UserService {
     ServerResponse resetPass(Long id,String newPass);
 
     ServerResponse<Page> listAllUsers(int pageIndex, int pageSize);
+
+    ServerResponse deleteUser(Long id);
+
+    ServerResponse validateUser(Long id);
 }

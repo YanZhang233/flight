@@ -34,4 +34,9 @@ public class Const {
         int VOLUNTEER_CHECKED = 0;
         int VOLUNTEER_UNCHECKED = 1;
     }
+
+    public interface Status{
+        int USER_VALID = 0;
+        int USER_INVALID = 1;
+    }
 }

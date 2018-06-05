@@ -49,8 +49,8 @@ public class FlightController {
         //检查是否登录
         if(curUser==null) return ServerResponse.creatByErrorCodeMessage(ResponseCode.NEEDLOG_IN.getCode(),ResponseCode.NEEDLOG_IN.getDesc());
         //检查邮箱是否认证
-        if(curUser.getEmailChecked()==Const.EmailChecked.EMAIL_INVALID) return ServerResponse.creatByErrorMessage("Please validate your email first");
-        if(curUser.getRole()!=Const.Role.ROLE_CUSTOMER) return ServerResponse.creatByErrorMessage("您不能提出请求");
+        //if(curUser.getEmailChecked()==Const.EmailChecked.EMAIL_INVALID) return ServerResponse.creatByErrorMessage("请先验证邮箱");
+        if(curUser.getRole()!=Const.Role.ROLE_CUSTOMER && curUser.getStatus()!=Const.Status.USER_INVALID) return ServerResponse.creatByErrorMessage("您不能提出请求");
         return flightService.addRequest(request,curUser.getId(),curUser.getUserName());
     }
 
@@ -64,9 +64,9 @@ public class FlightController {
             return ServerResponse.creatByErrorCodeMessage(ResponseCode.NEEDLOG_IN.getCode(),ResponseCode.NEEDLOG_IN.getDesc());
         }
         if(user.getRole()==Const.Role.ROLE_ADMIN) return ServerResponse.creatByErrorMessage("管理员不能接受接机请求");
-        if(user.getEmailChecked()==Const.EmailChecked.EMAIL_INVALID) return ServerResponse.creatByErrorMessage("请先验证邮箱");
-        if(user.getRole()==Const.Role.ROLE_CUSTOMER){
-            return ServerResponse.creatByErrorMessage("不能接受此请求，您不是接机志愿者");
+        //if(user.getEmailChecked()==Const.EmailChecked.EMAIL_INVALID) return ServerResponse.creatByErrorMessage("请先验证邮箱");
+        if(user.getRole()==Const.Role.ROLE_CUSTOMER || user.getStatus()==Const.Status.USER_INVALID){
+            return ServerResponse.creatByErrorMessage("不能接受此请求,您不是接机志愿者");
         }
         return flightService.takeRequest(id,user.getId(),user.getUserName(),user.getEmail());
     }

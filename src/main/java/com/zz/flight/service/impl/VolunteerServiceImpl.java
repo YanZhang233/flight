@@ -54,11 +54,11 @@ public class VolunteerServiceImpl implements VolunteerService {
         user.setRole(Const.Role.ROLE_V0LUNTEER);
         user.setUpdateTime(new Date());
         userRepository.save(user);
-        String to = user.getEmail();
-        String from = "zhuo9529@gmail.com";
-        String title = "验证通过";
-        String content = "<p>申请接机志愿者通过验证</p>";
-        EmailUtil.sendEmail(from,to,content,title);
+//        String to = user.getEmail();
+//        String from = "zhuo9529@gmail.com";
+//        String title = "验证通过";
+//        String content = "<p>申请接机志愿者通过验证</p>";
+//        EmailUtil.sendEmail(from,to,content,title);
         return ServerResponse.creatBySuccessMessage("success");
     }
 
