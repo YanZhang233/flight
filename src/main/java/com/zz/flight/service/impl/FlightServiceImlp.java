@@ -93,15 +93,13 @@ public class FlightServiceImlp implements FlightService {
     public ServerResponse<Page> getRequestByUserId(Long userId,int pageIndex,int pageSize,Long curUserId){
         Sort sort =  new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = PageRequest.of(pageIndex,pageSize,sort);
-        Page<Request> page = requestRepository.findAllByRequestUserIdOrTakenUserIdAndStatusGreaterThanEqual(userId,userId,0,pageable);
-        if(page.getTotalElements()==0) return ServerResponse.creatByErrorMessage("cant find your request");
+        Page<Request> page = requestRepository.findAllByRequestUserIdAndStatusNotOrTakenUserIdAndStatusNot(userId,-1,userId,-1,pageable);
         //如果不是当前登录用户查看
 //        if(!userId.equals(curUserId)){
 //            for(int i=0;i<page.getTotalElements();i++){
 //                page.getContent().get(i).set
 //            }
 //        }
-        if(page.getTotalElements()==0) return ServerResponse.creatByErrorMessage("没有请求");
         return ServerResponse.creatBySuccess(page);
     }
 

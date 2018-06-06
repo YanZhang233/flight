@@ -162,6 +162,8 @@ public class UserServiceImpl implements UserService {
         User pre = userRepository.findById(user.getId()).orElse(null);
         //新建一个User 只能更新规定的内容
         User newUser = new User();
+        newUser.setEmail(user.getEmail());
+        newUser.setPhone(user.getPhone());
         newUser.setActualName(user.getActualName());
         newUser.setGender(user.getGender());
         newUser.setGraduatedFrom(user.getGraduatedFrom());
